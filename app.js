@@ -14,7 +14,7 @@ mongoose.connect(CONNECTION_STRING);
 
 
 import ModuleRoutes from './modules/routes.js';
-import "dotenv/config.js"
+import "dotenv/config"
 import session from 'express-session';
 
 const app = express();
@@ -36,6 +36,7 @@ const sessionOptions = {
       secure: true,
     };
   }
+
   app.use(session(sessionOptions));
   
 // const sessionOptions = {
