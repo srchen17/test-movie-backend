@@ -52,6 +52,7 @@ function UserRoutes(app) {
     const { username, password } = req.body;
     const currentUser = await dao.findUserByCredentials(username, password);
     req.session['currentUser'] = currentUser;
+    req.session.save();
     res.json(currentUser);
     console.log("sign in:");
     console.log(JSON.stringify(req.session['currentUser']));
