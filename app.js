@@ -30,7 +30,7 @@ const sessionOptions = {
   saveUninitialized: false,
 };
 
-  if (process.env.NODE_ENV !== "development") {
+  if (true) {
     console.log("node env is not dev")
   sessionOptions.proxy = true;
   sessionOptions.cookie = {
