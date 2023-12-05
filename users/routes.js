@@ -107,35 +107,7 @@ function UserRoutes(app) {
     const account = async (req, res) => {
         res.json(currentUser);
     };
-
-
-
-    // const account = async (req, res) => {
-        //console.log(`CURRENT USER: ${currentUser}`);
-        // console.log("IN ACCOUNT");
-        // console.log(req.session);
-        // const currentUser = req.session.currentUser;
-        // if (currentUser) {
-        //     console.log(`CURRENT USER: ${currentUser}`);
-        //     res.json(currentUser);
-        // } else {
-        //     console.error('No user session found');
-        //     res.status(401).json({ message: 'Unauthorized current user is null' });
-        // }
-
-        // console.log(req.session['currentUser']);
-        // res.json(req.session['currentUser']);
-
-
-        //
-        // console.log(req.session['currentUser']);
-        // res.json(req.session['currentUser']);
-
-    //     res.json(currentUser);
-    //
-    //
-    //
-    // };
+    
 
 
     const signout = (req, res) => {

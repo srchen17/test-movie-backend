@@ -19,9 +19,13 @@
   },
   "homepage": "https://github.com/Ma-rachl/movie-project-backend#readme",
   "dependencies": {
+    "@chakra-ui/react": "^2.8.2",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
+    "framer-motion": "^10.16.12",
     "mongoose": "^8.0.2"
   },
   "devDependencies": {
