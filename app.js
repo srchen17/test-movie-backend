@@ -5,7 +5,7 @@ import cors from "cors";
 // import "dotenv/config";
 import mongoose from "mongoose";
 import UserRoutes from "./users/routes.js";
-
+import ReviewRoutes from './reviews/routes.js';
 
 mongoose.connect("mongodb://127.0.0.1:27017/movie");
 const app = express();
@@ -32,10 +32,7 @@ if (process.env.NODE_ENV !== "development") {
 }
 app.use(session(sessionOptions));
 
-
-
-
-
 UserRoutes(app);
+ReviewRoutes(app);
 
 app.listen(4000);

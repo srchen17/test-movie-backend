@@ -11,4 +11,5 @@ export const updateUser = (userId, user) =>
     model.updateOne({ _id: userId }, { $set: user });
 export const deleteUser = (userId) => model.deleteOne({ _id: userId });
 
+export const findLatestUsers = () => model.find().sort({_id:1}).limit(10); 
 

@@ -20,6 +20,14 @@ function UserRoutes(app) {
         res.json(users);
     };
 
+    const findLatestUsers = async (req, res) => {
+        console.log("IN find all users");
+        const users = await dao.findLatestUsers();
+        res.json(users);
+    };
+
+  
+
     const findUserById = async (req, res) => {
         console.log("IN find user by id");
         const user = await dao.findUserById(req.params.userId);
@@ -129,5 +137,7 @@ function UserRoutes(app) {
     app.post("/api/users/signin", signin);
     app.post("/api/users/signout", signout);
     app.post("/api/users/account", account);
+
+    app.get("/api/users/latest/find", findLatestUsers);
 }
 export default UserRoutes;
