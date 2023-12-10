@@ -10,9 +10,21 @@ function ReviewRoutes(app) {
 
     const createReview = async (req, res) => {
         console.log("IN create review");
+        console.log(req.body);
+        if (req.body.rating > 100 || req.body.rating < 0) {
+            res.status(400).json(
+            { message: "Rating must be between 0 and 100." });
+        } else {
+        try {
         const review = await dao.createReview(req.body);
         res.json(review);
-    };
+        }
+        catch (error) {
+            res.status(400).json(error);
+
+        }
+    }
+    }
 
     const deleteReview = async (req, res) => {
         const status = await dao.deleteReview(req.params.reviewId);
