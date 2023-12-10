@@ -39,8 +39,7 @@ function UserRoutes(app) {
         const { userId } = req.params;
         const status = await dao.updateUser(userId, req.body);
         currentUser = await dao.findUserById(userId);
-        // const currentUser = await dao.findUserById(userId);
-        // req.session['currentUser'] = currentUser;
+
         res.json(status);
     };
     //sign up, invalid if user name is taken
@@ -118,12 +117,48 @@ function UserRoutes(app) {
     
 
 
-    const signout = (req, res) => {
+    const signout =async (req, res) => {
         console.log("IN Signout");
         currentUser = null;
         res.json(200);
     };
 
+    const follow = async(req, res) => {
+        console.log("IN Follow");
+        // adds this user to the other user's follower list
+        try{
+            const { userId, followerId } = req.body;
+            const follow = await dao.addFollower(userId,followerId);
+            // adds that user to the this user's following list
+            const following = await dao.addFollowing(userId,followerId);
+            res.json({follow,following});
+        }catch (e) {
+            res.status(404).json({ error: 'follower error ' });
+        }
+  
+
+      
+    };
+
+    const findAllFollowersByUserId = async(req, res) => {
+        console.log("IN find all followers");
+        // const users = await dao.findAllFollowersByUserId(req.params.userId);
+        // res.json(users);
+        const user = await dao.findUserById(req.params.userId);
+        const followers = user.followers;
+        res.json(followers);
+    }
+
+    const findAllFollowingByUserId = async(req, res) => {
+        console.log("IN find all following");
+        // const users = await dao.findAllFollowingByUserId(req.params.userId);
+        // res.json(users);
+
+        const user = await dao.findUserById(req.params.userId);
+        const following = user.following;
+        res.json(following);
+
+    }
 
 
 
@@ -138,6 +173,10 @@ function UserRoutes(app) {
     app.post("/api/users/signout", signout);
     app.post("/api/users/account", account);
 
+
+    app.get("/api/users/followers/:userId", findAllFollowersByUserId);
+    app.get("/api/users/following/:userId", findAllFollowingByUserId);
+    app.post("/api/users/follow", follow);
     app.get("/api/users/latest/find", findLatestUsers);
 }
 export default UserRoutes;

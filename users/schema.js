@@ -6,6 +6,8 @@ const userSchema = new mongoose.Schema({
         email: String,
         lastName: String,
         dob: Date,
+        followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+        following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
         role: {
             type: String,
             enum: ["ADMIN", "USER"],
