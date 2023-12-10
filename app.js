@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(
     cors({
         credentials: true,
-        origin: "http://localhost:3000"
+        origin: process.env.FRONTEND_URL
     })
 );
 
@@ -29,6 +29,7 @@ const sessionOptions = {
     saveUninitialized: false,
 };
 if (process.env.NODE_ENV !== "development") {
+    console.log(process.env.NODE_ENV);
     sessionOptions.proxy = true;
     sessionOptions.cookie = {
         sameSite: "none",
