@@ -62,66 +62,67 @@ function UserRoutes(app) {
     //     res.json(currentUser);
     // };
 
-    // const signin = async (req, res) => {
-    //     try {
-    //         const { username, password } = req.body;
-
-    //         // Log incoming sign-in attempt
-    //         console.log(`Sign-in attempt for username: ${username}`);
-
-    //         // Perform user authentication (DAO function or logic)
-    //         const currentUser = await dao.findUserByCredentials(username, password);
-    //         console.log(`CURRENT USER: ${currentUser}`);
-
-    //         // check if the entered user exists in the system and password is correct
-    //         if (currentUser == null){
-    //             const finduser = await dao.findUserByUsername(username);
-    //             if (finduser == null){
-    //                 console.error(`username does not exist: ${username}`);
-    //                 res.status(400).json(
-    //                     { message: "Username does not exist" });
-    //                 // res.send("Username does not exist");
-
-    //             }else{
-    //                 console.error('password incorrect');
-    //                 res.status(400).json(
-    //                     { message: "Password incorrect" });
-    //                 // res.send("Password incorrect");
-    //             }
-    //         }else {
-    //             // successful sign-in
-    //             console.log(`Successful sign-in for username: ${username}`);
-
-    //             console.log("Session before setting currentUser:", req.session);
-    //             const currentUser = await dao.findUserByCredentials(username, password);
-    //             // Set session or return user data
-    //             req.session['currentUser'] = currentUser;
-    //             req.session.save();
-    //             console.log("Session after setting currentUser:", req.session);
-    //             res.json(req.session['currentUser']);
-    //         }
-    //     } catch (error) {
-    //         // Log any errors that occur during sign-in
-    //         console.error(`Error during sign-in for username: ${username}`, error);
-
-    //         // Handle the error and send an appropriate response
-    //         res.status(500).json({ message: 'Internal server error' });
-    //     }
-    // };
-
     const signin = async (req, res) => {
-        const { username, password } = req.body;
-        const currentUser = await dao.findUserByCredentials(username, password);
-        req.session['currentUser'] = currentUser;
-        console.log(req.session['currentUser']);
-        req.session.save();
-        res.json(currentUser);
-        console.log("sign in:");
-        console.log(JSON.stringify(req.session['currentUser']));
-      };
+        try {
+            const { username, password } = req.body;
+
+            // Log incoming sign-in attempt
+            console.log(`Sign-in attempt for username: ${username}`);
+
+            // Perform user authentication (DAO function or logic)
+            const currentUser = await dao.findUserByCredentials(username, password);
+            console.log(`CURRENT USER: ${currentUser}`);
+
+            // check if the entered user exists in the system and password is correct
+            if (currentUser == null){
+                const finduser = await dao.findUserByUsername(username);
+                if (finduser == null){
+                    console.error(`username does not exist: ${username}`);
+                    res.status(400).json(
+                        { message: "Username does not exist" });
+                    // res.send("Username does not exist");
+
+                }else{
+                    console.error('password incorrect');
+                    res.status(400).json(
+                        { message: "Password incorrect" });
+                    // res.send("Password incorrect");
+                }
+            }else {
+                // successful sign-in
+                console.log(`Successful sign-in for username: ${username}`);
+
+                console.log("Session before setting currentUser:", req.session);
+                const currentUser = await dao.findUserByCredentials(username, password);
+                // Set session or return user data
+                req.session['currentUser'] = currentUser;
+                req.session.save();
+                console.log("Session after setting currentUser:", req.session);
+                res.json(req.session['currentUser']);
+            }
+        } catch (error) {
+            // Log any errors that occur during sign-in
+            console.error(`Error during sign-in for username: ${username}`, error);
+
+            // Handle the error and send an appropriate response
+            res.status(500).json({ message: 'Internal server error' });
+        }
+    };
+
+    // const signin = async (req, res) => {
+    //     const { username, password } = req.body;
+    //     const currentUser = await dao.findUserByCredentials(username, password);
+    //     req.session['currentUser'] = currentUser;
+    //     console.log(req.session['currentUser']);
+    //     req.session.save();
+    //     res.json(currentUser);
+    //     console.log("sign in:");
+    //     console.log(JSON.stringify(req.session['currentUser']));
+    //   };
 
 
     const account = async (req, res) => {
+        console.log("Fetch account:");
         console.log(req.session['currentUser']);
         res.json(req.session['currentUser']);
     };
