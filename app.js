@@ -1,44 +1,52 @@
 import express from 'express';
-import session from "express-session";
-
 import cors from "cors";
-// import "dotenv/config";
 import mongoose from "mongoose";
 import UserRoutes from "./users/routes.js";
 import ReviewRoutes from './reviews/routes.js';
 
 import "dotenv/config"; 
 
+
 const CONNECTION_STRING = process.env.DB_CONNECTION_STRING;
 // const CONNECTION_STRING = 'mongodb://127.0.0.1:27017/movie';
 mongoose.connect(CONNECTION_STRING);
 
+import session from 'express-session';
+
 const app = express();
-app.use(express.json());
 app.use(
-    cors({
-        credentials: true,
-        origin: process.env.FRONTEND_URL
-    })
+  cors({
+    credentials: true,
+    origin: process.env.FRONTEND_URL
+  })
 );
-
-
 const sessionOptions = {
-    secret: "any string",
-    resave: false,
-    saveUninitialized: false,
+  secret: "any string",
+  resave: false,
+  saveUninitialized: false,
 };
-if (process.env.NODE_ENV !== "development") {
-    console.log(process.env.NODE_ENV);
-    sessionOptions.proxy = true;
-    sessionOptions.cookie = {
-        sameSite: "none",
-        secure: false,
-    };
-}
-app.use(session(sessionOptions));
 
+  if (true) {
+    console.log("node env is not dev")
+  sessionOptions.proxy = true;
+  sessionOptions.cookie = {
+    sameSite: "none",
+    secure: true,
+  };
+}
+
+app.use(session(sessionOptions));
+  
+// const sessionOptions = {
+//     secret: "any string",
+//     resave: false,
+//     saveUninitialized: false,
+//   };
+//   app.use(
+//     session(sessionOptions)
+//   );
+  
+app.use(express.json());
 UserRoutes(app);
 ReviewRoutes(app);
-
-app.listen(4000);
+app.listen(process.env.PORT || 4000);
