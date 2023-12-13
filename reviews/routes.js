@@ -1,5 +1,4 @@
 import * as dao from "./dao.js";
-let currentReview = null;
 
 function ReviewRoutes(app) {
     const findLatestReviews = async (req, res) => {
