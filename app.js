@@ -2,6 +2,7 @@ import express from 'express';
 import cors from "cors";
 import mongoose from 'mongoose';
 import UserRoutes from "./users/routes.js";
+import ReviewRoutes from "./reviews/routes.js";
 import "dotenv/config"; 
 
 const CONNECTION_STRING = process.env.DB_CONNECTION_STRING
@@ -47,5 +48,6 @@ app.use(session(sessionOptions));
   
 app.use(express.json());
 UserRoutes(app);
+ReviewRoutes(app);
 app.listen(process.env.PORT || 4000);
 
