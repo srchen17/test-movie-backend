@@ -37,16 +37,6 @@ const sessionOptions = {
 }
 
 app.use(session(sessionOptions));
-  
-// const sessionOptions = {
-//     secret: "any string",
-//     resave: false,
-//     saveUninitialized: false,
-//   };
-//   app.use(
-//     session(sessionOptions)
-//   );
-  
 app.use(express.json());
 UserRoutes(app);
 ReviewRoutes(app);

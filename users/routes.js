@@ -37,9 +37,11 @@ function UserRoutes(app) {
         console.log("IN updateuser");
         const { userId } = req.params;
         const status = await dao.updateUser(userId, req.body);
-        const currentUser = await dao.findUserById(userId);
-        req.session['currentUser'] = currentUser;
-        res.json(status);
+        if (userId == req.session['currentUser']._id) {
+            const currentUser = await dao.findUserById(userId);
+            req.session['currentUser'] = currentUser;
+        }
+        res.json(status); 
     };
     //sign up, invalid if user name is taken
     const signup = async (req, res) => {
