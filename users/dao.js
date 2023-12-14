@@ -33,6 +33,12 @@ export const addFollowing = (userId, followerId) =>
  export const findAllFollowingByUserId = (userId) =>
     model.find({ user_id: { $in: this.following } });
 
+    export const deleteFollower = (userId, followerId) =>
+    model.updateOne({ _id: userId }, { $pull: {followers:followerId} });
+
+export const deleteFollowing = (userId, followerId) =>
+    model.updateOne({ _id: userId }, { $pull: {following:followerId} });
+
 // export const findFollowerById = (userId) => model.findById(userId);
 
 
